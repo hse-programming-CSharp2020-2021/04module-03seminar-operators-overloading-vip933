@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 /*
 Источник: https://metanit.com/
@@ -28,20 +28,58 @@ namespace Task05
 {
     class Dollar
     {
-        public decimal Sum { get; set; }
+        private decimal sum;
+        public decimal Sum
+        {
+            get => sum;
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException();
+                sum = value;
+            }
+        }
+
+        public static implicit operator Dollar(Euro euro)
+        {
+            return new Dollar { Sum = euro.Sum * new decimal(1.14) };
+        }
+
+        public override string ToString() => $"{sum:f2}";
     }
     class Euro
     {
-        public decimal Sum { get; set; }
+        private decimal sum;
+        public decimal Sum
+        {
+            get => sum;
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException();
+                sum = value;
+            }
+        }
+
+        public static explicit operator Euro(Dollar dollar)
+        {
+            return new Euro { Sum = dollar.Sum / new decimal(1.14) };
+        }
+
+        public override string ToString() => $"{sum:f2}";
     }
 
     class MainClass
     {
         public static void Main(string[] args)
         {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("ru-RU");
             try
             {
-
+                Dollar dollar = new Dollar { Sum = int.Parse(Console.ReadLine()) };
+                Euro euro = new Euro { Sum = int.Parse(Console.ReadLine()) };
+                Console.WriteLine((Euro)dollar);
+                Console.WriteLine((Dollar)euro);
             }
             catch (ArgumentException)
             {

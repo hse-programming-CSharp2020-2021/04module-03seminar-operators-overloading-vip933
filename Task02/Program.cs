@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 /*
 Источник: https://metanit.com/
@@ -30,8 +30,60 @@ namespace Task02
 {
     class State
     {
-        public decimal Population { get; set; }
-        public decimal Area { get; set; }
+        public decimal Population
+        {
+            get
+            {
+                return Population;
+            }
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException();
+                else
+                    Population = value;
+            }
+        }
+        public decimal Area
+        {
+            get
+            {
+                return Area;
+            }
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentException();
+                else
+                    Area = value;
+            }
+        }
+
+        public static State operator +(State left, State right)
+        {
+            return new State { Area = left.Area + right.Area, Population = left.Population + right.Population };
+        }
+
+        public static bool operator <(State left, State right)
+        {
+            if (left.Population / left.Area > right.Population / right.Area)
+                return true;
+            else
+                return false;
+        }
+
+        public static bool operator >(State left, State right)
+        {
+            if (left.Population / left.Area < right.Population / right.Area)
+                return true;
+            else
+                return false;
+        }
+
+        public override string ToString()
+        {
+            return $"{Area} {Population}";
+        }
     }
 
     class MainClass
@@ -55,12 +107,12 @@ namespace Task02
                 }
 
                 State state3 = state1 + state2;
+                Console.WriteLine(state3);
             }
             catch (ArgumentException)
             {
                 Console.WriteLine("error");
             }
-            Console.WriteLine(state3);
         }
     }
 }

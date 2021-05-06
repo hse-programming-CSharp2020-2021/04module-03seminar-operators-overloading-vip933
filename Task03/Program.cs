@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 /*
 Источник: https://metanit.com/
@@ -29,25 +29,47 @@ namespace Task03
 {
     class Clock
     {
-        public int Hours { get; set; }
+        private int hours;
+        public int Hours
+        {
+            get => hours;
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException();
+                hours = value;
+            }
+        }
+
+        public static explicit operator int(Clock clock)
+        {
+            return clock.Hours * 60;
+        }
+
+        public static implicit operator Clock(int minutes)
+        {
+            return new Clock { Hours = minutes / 60 };
+        }
+
+        public override string ToString() => hours.ToString();
     }
 
     class MainClass
     {
         public static void Main(string[] args)
         {
+            Clock clock = null;
             int minute = int.Parse(Console.ReadLine());
             try
             {
-                Clock clock = new Clock { Hours = int.Parse(Console.ReadLine()) };
+                clock = new Clock { Hours = int.Parse(Console.ReadLine()) };
+                Console.WriteLine((Clock)minute);
+                Console.WriteLine((int)clock);
             }
             catch (ArgumentException)
             {
                 Console.WriteLine("error");
             }
-
-            Console.WriteLine((Clock)minute);
-            Console.WriteLine((int)clock);
         }
     }
 }

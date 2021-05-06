@@ -32,12 +32,7 @@ namespace Task03
         private int hours;
         public int Hours
         {
-            get
-            {
-                if (hours < 0)
-                    throw new ArgumentException();
-                return hours;
-            }
+            get => hours;
             set
             {
                 if (value < 0)
@@ -53,6 +48,8 @@ namespace Task03
 
         public static implicit operator Clock(int minutes)
         {
+            if (minutes < 0)
+                throw new ArgumentException();
             return new Clock { Hours = minutes / 60 };
         }
 

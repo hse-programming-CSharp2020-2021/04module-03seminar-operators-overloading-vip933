@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 /*
 Источник: https://metanit.com/
@@ -27,18 +27,31 @@ namespace Task04
     class Celcius
     {
         public double Gradus { get; set; }
+        public static implicit operator Celcius(Fahrenheit fahrenheit)
+        {
+            return new Celcius { Gradus = 5.0 / 9.0 * (fahrenheit.Gradus - 32) };
+        }
+        public override string ToString() => Gradus.ToString();
     }
 
     class Fahrenheit
     {
         public double Gradus { get; set; }
+        public static implicit operator Fahrenheit(Celcius celcius)
+        {
+            return new Fahrenheit { Gradus = 9.0 / 5.0 * celcius.Gradus + 32 };
+        }
+        public override string ToString() => Gradus.ToString();
     }
 
     class MainClass
     {
         public static void Main(string[] args)
         {
-
+            Fahrenheit fahrenheit = new Fahrenheit { Gradus = int.Parse(Console.ReadLine()) };
+            Celcius celcius = new Celcius { Gradus = int.Parse(Console.ReadLine()) };
+            Console.WriteLine($"{ (Celcius)fahrenheit:f2}");
+            Console.WriteLine($"{(Fahrenheit)celcius:f2}");
         }
     }
 }

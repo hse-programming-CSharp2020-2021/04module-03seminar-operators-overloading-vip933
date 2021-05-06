@@ -31,7 +31,7 @@ namespace Task04
         {
             return new Celcius { Gradus = 5.0 / 9.0 * (fahrenheit.Gradus - 32) };
         }
-        public override string ToString() => Gradus.ToString();
+        public override string ToString() => $"{Gradus:f2}";
     }
 
     class Fahrenheit
@@ -41,7 +41,7 @@ namespace Task04
         {
             return new Fahrenheit { Gradus = 9.0 / 5.0 * celcius.Gradus + 32 };
         }
-        public override string ToString() => Gradus.ToString();
+        public override string ToString() => $"{Gradus:f2}";
     }
 
     class MainClass
@@ -50,8 +50,8 @@ namespace Task04
         {
             Fahrenheit fahrenheit = new Fahrenheit { Gradus = int.Parse(Console.ReadLine()) };
             Celcius celcius = new Celcius { Gradus = int.Parse(Console.ReadLine()) };
-            Console.WriteLine($"{ (Celcius)fahrenheit:f2}");
-            Console.WriteLine($"{(Fahrenheit)celcius:f2}");
+            Console.WriteLine((Celcius)fahrenheit);
+            Console.WriteLine((Fahrenheit)celcius);
         }
     }
 }

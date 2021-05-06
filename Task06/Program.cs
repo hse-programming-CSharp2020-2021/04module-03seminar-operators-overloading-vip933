@@ -56,6 +56,8 @@ public readonly struct Fraction
     {
         if (den == 1)
             return num.ToString();
+        if (den == 0)
+            throw new DivideByZeroException();
         if (den < 0)
             return -num+ "/" + -den;
         return num + "/" + den;
@@ -92,8 +94,6 @@ public readonly struct Fraction
 
     public static Fraction operator /(Fraction left, Fraction right)
     {
-        if (right.den == 0)
-            throw new DivideByZeroException();
         return Simplify(new Fraction(left.num * right.den, left.den * right.num));
     }
 

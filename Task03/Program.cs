@@ -32,7 +32,12 @@ namespace Task03
         private int hours;
         public int Hours
         {
-            get => hours;
+            get
+            {
+                if (hours < 0)
+                    throw new ArgumentException();
+                return hours;
+            }
             set
             {
                 if (value < 0)

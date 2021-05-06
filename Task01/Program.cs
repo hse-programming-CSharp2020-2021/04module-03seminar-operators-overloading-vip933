@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 /*
 Источник: https://metanit.com/
@@ -28,6 +28,13 @@ namespace Task01
     class Butter
     {
         public int Weight { get; set; }
+
+        public static Sandwich operator +(Bread left, Butter right)
+        {
+            if (left.Weight < 0 || right.Weight < 0)
+                throw new ArgumentException();
+            return new Sandwich { Weight = left.Weight + right.Weight };
+        }
     }
     class Sandwich
     {
@@ -38,12 +45,13 @@ namespace Task01
     {
         public static void Main()
         {
+            Sandwich sandwich = null;
             string[] strs = Console.ReadLine().Split();
             try
             {
                 Bread bread = new Bread { Weight = int.Parse(strs[0]) };
                 Butter butter = new Butter { Weight = int.Parse(strs[1]) };
-                Sandwich sandwich = bread + butter;
+                sandwich = bread + butter;
             }
             catch (ArgumentException)
             {
